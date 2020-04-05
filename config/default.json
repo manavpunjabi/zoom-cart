@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://manav:manav123@myfreecluster-supsc.mongodb.net/zoom-cart?retryWrites=true&w=majority",
+  "jwtSecret": "mysecretjwttoken"
+}
