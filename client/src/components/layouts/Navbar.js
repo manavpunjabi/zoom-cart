@@ -1,7 +1,39 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { logout } from "../../actions/auth";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-const Navbar = () => {
+const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
+  const authLinks = (
+    <ul className="nav navbar-nav ml-auto">
+      <li className="nav-item active">
+        <Link className="nav-link" to="/orders">
+          My Orders <span className="sr-only">(current)</span>
+        </Link>
+      </li>
+
+      <li className="nav-item">
+        <Link onClick={logout} className="nav-link">
+          <i className="fas fa-sign-out-alt"></i> Logout
+        </Link>
+      </li>
+    </ul>
+  );
+  const guestLinks = (
+    <ul className="nav navbar-nav ml-auto">
+      <li className="nav-item active">
+        <Link className="nav-link" to="/login">
+          Login <span className="sr-only">(current)</span>
+        </Link>
+      </li>
+      <li className="nav-item active">
+        <Link className="nav-link" to="/register">
+          Register <span className="sr-only">(current)</span>
+        </Link>
+      </li>
+    </ul>
+  );
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-1">
       <Link className="navbar-brand" to="/">
@@ -19,26 +51,21 @@ const Navbar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="nav navbar-nav ml-auto">
-          <li className="nav-item active">
-            <Link className="nav-link" to="/login">
-              Login <span className="sr-only">(current)</span>
-            </Link>
-          </li>
-          <li className="nav-item active">
-            <Link className="nav-link" to="/register">
-              Register <span className="sr-only">(current)</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/profile">
-              Welcome user
-            </Link>
-          </li>
-        </ul>
+        {!loading && (
+          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+        )}
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);

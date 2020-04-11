@@ -19,10 +19,14 @@ const UserSchema = new mongoose.Schema({
   },
   address: {
     type: String,
+    required: true,
   },
   date: {
     type: Date,
     default: Date.now,
+  },
+  admin: {
+    type: Number,
   },
 });
 
