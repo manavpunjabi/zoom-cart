@@ -20,6 +20,7 @@ router.post(
       "password",
       "Password should contain six or more characters"
     ).isLength({ min: 6 }),
+    check("address", "Address is required").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -27,7 +28,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password, address } = req.body;
 
     try {
       // See if user exists
@@ -46,6 +47,7 @@ router.post(
       user = new User({
         name,
         email,
+        address,
         avatar,
         password,
       });
