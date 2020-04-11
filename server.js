@@ -1,6 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/db");
-
+const fileUpload = require("express-fileupload");
 const app = express();
 // Connect to MongoDB
 connectDB();
@@ -8,6 +8,7 @@ connectDB();
 // Init Middleware
 
 app.use(express.json({ extended: false }));
+app.use(fileUpload());
 
 app.get("/", (req, res) => res.send("API Running"));
 

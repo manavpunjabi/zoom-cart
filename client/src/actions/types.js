@@ -7,3 +7,5 @@ export const AUTH_ERROR = "AUTH_ERROR";
 export const REGISTER_USER = "REGISTER_USER";
 export const REGISTER_ERROR = "REGISTER_ERROR";
 export const LOGOUT = "LOGOUT";
+export const GET_PRODUCTS = "GET_PRODUCTS";
+export const PRODUCT_ERROR = "PRODUCT_ERROR";

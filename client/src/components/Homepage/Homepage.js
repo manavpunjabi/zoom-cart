@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import Products from "./Products";
+import { Link } from "react-router-dom";
 const Homepage = (props) => {
-  return <div>Homepage</div>;
+  return <Products />;
 };
 
 Homepage.propTypes = {};

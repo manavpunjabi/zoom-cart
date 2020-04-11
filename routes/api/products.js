@@ -3,6 +3,7 @@ const router = express.Router();
 const Product = require("../../models/Product");
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
+
 // @route   GET api/products
 // @desc    GET all products
 // @access  Public
