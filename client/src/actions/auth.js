@@ -51,7 +51,7 @@ export const register = ({ name, email, password, address }) => async (
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      errors.forEach((error) => dispatch(setAlert(error.msg, "error")));
     }
     dispatch({
       type: REGISTER_ERROR,
@@ -78,7 +78,7 @@ export const login = (email, password) => async (dispatch) => {
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      errors.forEach((error) => dispatch(setAlert(error.msg, "error")));
     }
     dispatch({
       type: LOGIN_ERROR,

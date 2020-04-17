@@ -3,6 +3,19 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { login } from "../../actions/auth";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+// import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -20,6 +33,26 @@ const Login = ({ login, isAuthenticated }) => {
     e.preventDefault();
     login(email, password);
   };
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: "100%", // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+  const classes = useStyles();
 
   // Redirect if log in successful
   if (isAuthenticated) {
@@ -27,52 +60,62 @@ const Login = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
-      <h1 className="large text-primary text-center">
-        {" "}
-        <i className="fas fa-user"></i> Login
-      </h1>
-      <p className="lead">Sign in to your account</p>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={(e) => onSubmit(e)}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
             name="email"
+            autoComplete="email"
+            autoFocus
             value={email}
             onChange={(e) => onChange(e)}
-            id="email"
-            required
-            placeholder="email"
-            className="form-control"
+            type="email"
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password1">Password</label>
-          <input
-            type="password"
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             name="password"
-            value={password}
-            required
-            minLength="6"
-            placeholder="password"
-            onChange={(e) => onChange(e)}
+            label="Password"
+            type="password"
             id="password"
-            className="form-control"
+            value={password}
+            onChange={(e) => onChange(e)}
+            autoComplete="current-password"
           />
-        </div>
-        <div className="text-center">
-          <input
+          <Button
             type="submit"
-            value="Login"
-            className="btn btn-primary text-center"
-          />
-          <p className="my-1">
-            Don't have an account? <Link to="/register">Sign Up</Link>
-          </p>
-        </div>
-      </form>
-    </Fragment>
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item>
+              <Link to="/register" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
 };
 

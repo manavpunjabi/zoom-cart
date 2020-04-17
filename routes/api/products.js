@@ -3,6 +3,8 @@ const router = express.Router();
 const Product = require("../../models/Product");
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
+const uuid = require("uuid");
+const path = require("path");
 
 // @route   GET api/products
 // @desc    GET all products
@@ -51,7 +53,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { name, desc, price, image } = req.body;
+    const { name, desc, price } = req.body;
     try {
       let product = new Product({
         name,
@@ -59,7 +61,9 @@ router.post(
         price,
       });
       await product.save();
-      res.json(product);
+      res.json({
+        product,
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
@@ -67,6 +71,25 @@ router.post(
   }
 );
 
+// test add image/ edit profile route bana
+router.post("/:id", (req, res) => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  }
+  const file = req.files.file;
+  const id = uuid.v4();
+
+  file.mv(`../../client/public/uploads/${file.name}`, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    res.json({
+      fileName: file.name,
+      filePath: `../../client/public/uploads/${file.name}`,
+    });
+  });
+});
 // @route   PUT api/products/:id
 // @desc    Update Product
 // @access  Private

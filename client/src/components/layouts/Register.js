@@ -4,6 +4,20 @@ import { connect } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { Link, Redirect } from "react-router-dom";
 import { register } from "../../actions/auth";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+// import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { TextareaAutosize } from "@material-ui/core";
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -26,7 +40,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      setAlert("Passwords do not match", "danger");
+      setAlert("Passwords do not match", "error");
     } else {
       register({
         name,
@@ -36,98 +50,136 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       });
     }
   };
-
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: "100%", // Fix IE 11 issue.
+      marginTop: theme.spacing(3),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+  const classes = useStyles();
   // Redirect if register successful
   if (isAuthenticated) {
     return <Redirect to="/homepage" />;
   }
 
   return (
-    <Fragment>
-      <h1 className="large text-primary text-center">
-        {" "}
-        <i className="fas fa-user"></i> Register
-      </h1>
-      <p className="lead">Sign up</p>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
-          <label htmlFor="email">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={(e) => onChange(e)}
-            id="name"
-            required
-            placeholder="name"
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => onChange(e)}
-            id="email"
-            required
-            placeholder="email"
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password1">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            minLength="6"
-            required
-            placeholder="password"
-            onChange={(e) => onChange(e)}
-            id="password"
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password1">Confirm Password</label>
-          <input
-            type="password"
-            name="password2"
-            value={password2}
-            minLength="6"
-            required
-            placeholder="password2"
-            onChange={(e) => onChange(e)}
-            id="password2"
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Address</label>
-          <textarea
-            name="address"
-            value={address}
-            onChange={(e) => onChange(e)}
-            id="address"
-            required
-            placeholder="address"
-            className="form-control"
-          />
-        </div>
-        <div className="text-center">
-          <input
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="name"
+                name="name"
+                variant="outlined"
+                required
+                fullWidth
+                id="Name"
+                label="Name"
+                autoFocus
+                value={name}
+                onChange={(e) => onChange(e)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                value={email}
+                required
+                onChange={(e) => onChange(e)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                minLength="6"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => onChange(e)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password2"
+                label="Confirm Password"
+                type="password"
+                id="password2"
+                required
+                minLength="6"
+                value={password2}
+                onChange={(e) => onChange(e)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="standard-multiline-static"
+                label="Address"
+                multiline
+                fullWidth
+                name="address"
+                variant="outlined"
+                required
+                value={address}
+                onChange={(e) => onChange(e)}
+                rows={4}
+              />
+            </Grid>
+          </Grid>
+          <Button
             type="submit"
-            value="Register"
-            className="btn btn-primary text-center"
-          />
-          <p className="my-1">
-            Already have an account? <Link to="/login">Sign In</Link>
-          </p>
-        </div>
-      </form>
-    </Fragment>
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="/login" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
 };
 

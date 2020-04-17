@@ -3,59 +3,74 @@ import { Link } from "react-router-dom";
 import { logout } from "../../actions/auth";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+//import Link from "@material-ui/core/Link";
 const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+      marginBottom: 5,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+  }));
+  const classes = useStyles();
   const authLinks = (
-    <ul className="nav navbar-nav ml-auto">
-      <li className="nav-item active">
-        <Link className="nav-link" to="/orders">
-          My Orders <span className="sr-only">(current)</span>
-        </Link>
-      </li>
+    <Fragment>
+      <Button href="/orders" color="inherit">
+        My Orders
+      </Button>
 
-      <li className="nav-item">
-        <Link onClick={logout} className="nav-link">
-          <i className="fas fa-sign-out-alt"></i> Logout
-        </Link>
-      </li>
-    </ul>
+      <Button onClick={logout} href="/logout" color="inherit">
+        <i className="fas fa-sign-out-alt"></i> Logout
+      </Button>
+    </Fragment>
   );
   const guestLinks = (
-    <ul className="nav navbar-nav ml-auto">
-      <li className="nav-item active">
-        <Link className="nav-link" to="/login">
-          Login <span className="sr-only">(current)</span>
-        </Link>
-      </li>
-      <li className="nav-item active">
-        <Link className="nav-link" to="/register">
-          Register <span className="sr-only">(current)</span>
-        </Link>
-      </li>
-    </ul>
+    <Fragment>
+      <Button color="inherit" href="/login">
+        Login
+      </Button>
+      <Button href="/register" color="inherit">
+        Register
+      </Button>
+    </Fragment>
   );
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-1">
-      <Link className="navbar-brand" to="/">
-        <i class="fas fa-cat"></i> zoom-cart
-      </Link>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
-        {!loading && (
-          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-        )}
-      </div>
-    </nav>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          {/* <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton> */}
+
+          <Typography variant="h6" className={classes.title}>
+            <Button color="inherit" href="/">
+              <i className="fas fa-cat"></i> zoom-cart
+            </Button>
+          </Typography>
+
+          {!loading && (
+            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+          )}
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 
