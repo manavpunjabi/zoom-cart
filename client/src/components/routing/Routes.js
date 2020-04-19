@@ -10,7 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-
+import Product from "../product/Product";
 const Routes = () => {
   return (
     <Fragment>
@@ -22,6 +22,7 @@ const Routes = () => {
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/homepage" component={Homepage} />
           <PrivateRoute exact path="/add-product" component={AddProduct} />
+          <PrivateRoute exact path="/products/:id" component={Product} />
           <Route component={NotFound} />
         </Switch>
       </Container>

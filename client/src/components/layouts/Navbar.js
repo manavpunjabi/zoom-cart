@@ -10,12 +10,24 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Avatar from "@material-ui/core/Avatar";
 //import Link from "@material-ui/core/Link";
-const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
+const Navbar = ({
+  logout,
+  auth: {
+    isAuthenticated,
+    loading,
+    user: { admin, avatar },
+  },
+}) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
       marginBottom: 5,
+      display: "flex",
+      "& > *": {
+        margin: theme.spacing(0),
+      },
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -34,6 +46,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
       <Button onClick={logout} href="/logout" color="inherit">
         <i className="fas fa-sign-out-alt"></i> Logout
       </Button>
+      <Avatar src={avatar} className={classes.large} />
     </Fragment>
   );
   const guestLinks = (

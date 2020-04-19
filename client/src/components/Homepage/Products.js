@@ -51,7 +51,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Products = ({ getProducts, product: { loading, products } }) => {
+const Products = ({
+  auth: {
+    user: { admin },
+  },
+  getProducts,
+
+  product: { loading, products },
+}) => {
   const classes = useStyles();
   useEffect(() => {
     getProducts();
@@ -93,11 +100,17 @@ const Products = ({ getProducts, product: { loading, products } }) => {
                         Main call to action
                       </Button>
                     </Grid>
-                    <Grid item>
-                      <Button variant="outlined" color="primary">
-                        Secondary action
-                      </Button>
-                    </Grid>
+                    {admin && (
+                      <Grid item>
+                        <Button
+                          href="/add-product"
+                          variant="outlined"
+                          color="primary"
+                        >
+                          Add Product
+                        </Button>
+                      </Grid>
+                    )}
                   </Grid>
                 </div>
               </Container>
@@ -122,10 +135,12 @@ const Products = ({ getProducts, product: { loading, products } }) => {
 Products.propTypes = {
   product: PropTypes.object.isRequired,
   getProducts: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   product: state.product,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getProducts })(Products);

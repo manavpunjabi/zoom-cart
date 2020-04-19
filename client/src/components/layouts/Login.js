@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { login } from "../../actions/auth";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -9,7 +9,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-// import Link from "@material-ui/core/Link";
+import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -67,7 +67,7 @@ const Login = ({ login, isAuthenticated }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         <form className={classes.form} noValidate onSubmit={(e) => onSubmit(e)}>
           <TextField
@@ -104,12 +104,12 @@ const Login = ({ login, isAuthenticated }) => {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Login
           </Button>
-          <Grid container>
+          <Grid container justify="center">
             <Grid item>
               <Link to="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
+                Don't have an account? Register
               </Link>
             </Grid>
           </Grid>

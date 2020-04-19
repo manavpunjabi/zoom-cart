@@ -63,7 +63,7 @@ const ProductItem = ({ product: { _id, name, desc, price, image } }) => {
           <Typography>{desc}</Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button href={`/products/${_id}`} size="small" color="primary">
             View
           </Button>
           <Button size="small" color="primary">

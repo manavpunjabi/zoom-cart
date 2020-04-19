@@ -26,7 +26,8 @@ const UserSchema = new mongoose.Schema({
     default: Date.now,
   },
   admin: {
-    type: Number,
+    type: Boolean,
+    default: false,
   },
 });
 

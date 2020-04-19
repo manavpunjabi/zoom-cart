@@ -8,5 +8,6 @@ export const REGISTER_USER = "REGISTER_USER";
 export const REGISTER_ERROR = "REGISTER_ERROR";
 export const LOGOUT = "LOGOUT";
 export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_PRODUCT = "GET_PRODUCT";
 export const PRODUCT_ERROR = "PRODUCT_ERROR";
 export const ADD_PRODUCT = "ADD_PRODUCT";
