@@ -17,13 +17,13 @@ const Navbar = ({
   auth: {
     isAuthenticated,
     loading,
-    user: { admin, avatar },
+    user: { admin, avatar, name },
   },
 }) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
-      marginBottom: 5,
+      marginBottom: 0,
       display: "flex",
       "& > *": {
         margin: theme.spacing(0),
@@ -42,11 +42,12 @@ const Navbar = ({
       <Button href="/orders" color="inherit">
         My Orders
       </Button>
-
       <Button onClick={logout} href="/logout" color="inherit">
         <i className="fas fa-sign-out-alt"></i> Logout
       </Button>
-      <Avatar src={avatar} className={classes.large} />
+      <Typography>{name}</Typography>
+      {admin === true && <Fragment>(Admin)</Fragment>}
+      <Avatar src={avatar} className={classes} />
     </Fragment>
   );
   const guestLinks = (

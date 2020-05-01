@@ -56,7 +56,6 @@ const Products = ({
     user: { admin },
   },
   getProducts,
-
   product: { loading, products },
 }) => {
   const classes = useStyles();
@@ -119,7 +118,11 @@ const Products = ({
               <Grid container spacing={4}>
                 {products.length > 0 ? (
                   products.map((product) => (
-                    <ProductItem key={product._id} product={product} />
+                    <ProductItem
+                      key={product._id}
+                      product={product}
+                      admin={admin}
+                    />
                   ))
                 ) : (
                   <h4>No products found</h4>

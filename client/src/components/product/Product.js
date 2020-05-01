@@ -33,7 +33,7 @@ const Product = ({
         <Spinner />
       ) : (
         <div className={classes.root}>
-          <Button variant="contained" color="secondary" to="/homepage">
+          <Button variant="contained" color="secondary" href="/homepage">
             Back to all products
           </Button>
         </div>

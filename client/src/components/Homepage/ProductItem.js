@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import CameraIcon from "@material-ui/icons/PhotoCamera";
 import Card from "@material-ui/core/Card";
@@ -13,7 +13,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-//import Link from "@material-ui/core/Link";
+import { deleteProduct } from "../../actions/product";
+import { connect } from "react-redux";
+import Link from "@material-ui/core/Link";
+
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -35,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%",
   },
   cardContent: {
     flexGrow: 1,
@@ -45,30 +48,46 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(6),
   },
 }));
-const ProductItem = ({ product: { _id, name, desc, price, image } }) => {
+
+const ProductItem = ({
+  product: { _id, name, desc, price, image },
+  admin,
+  deleteProduct,
+}) => {
   const classes = useStyles();
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card className={classes.card}>
-        <CardMedia
-          className={classes.cardMedia}
-          image={image}
-          title="Image title"
-        />
-        <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {name}
-          </Typography>
-          <Typography>{desc}</Typography>
-        </CardContent>
+        <Link href={`/products/${_id}`} size="small" color="primary">
+          <CardMedia
+            className={classes.cardMedia}
+            image={image}
+            title="Image title"
+          />
+          <CardContent className={classes.cardContent}>
+            <Typography gutterBottom variant="h5" component="h2">
+              {name}
+            </Typography>
+            <Typography>{desc}</Typography>
+          </CardContent>
+        </Link>
         <CardActions>
-          <Button href={`/products/${_id}`} size="small" color="primary">
-            View
-          </Button>
-          <Button size="small" color="primary">
-            Add to cart
-          </Button>
+          <Button>{price}</Button>
+          {admin && (
+            <Fragment>
+              <Button
+                onClick={(e) => deleteProduct(_id)}
+                size="small"
+                color="secondary"
+              >
+                Delete
+              </Button>
+              <Button href={`/${_id}/edit`} size="small" color="secondary">
+                Edit
+              </Button>
+            </Fragment>
+          )}
         </CardActions>
       </Card>
     </Grid>
@@ -77,6 +96,7 @@ const ProductItem = ({ product: { _id, name, desc, price, image } }) => {
 
 ProductItem.propTypes = {
   product: PropTypes.object.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
 };
 
-export default ProductItem;
+export default connect(null, { deleteProduct })(ProductItem);
