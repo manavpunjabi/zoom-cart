@@ -5,7 +5,7 @@ const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 const uuid = require("uuid");
 const path = require("path");
-
+const fileUpload = require("express-fileupload");
 // @route   GET api/products
 // @desc    GET all products
 // @access  Public
@@ -71,24 +71,49 @@ router.post(
   }
 );
 
-// test add image/ edit profile route bana
-router.post("/:id", (req, res) => {
+// @route   GET api/products/:id/get-image
+// @desc    Get Image
+// @access  Private
+router.get("/:id/get-image", auth, async (req, res) => {
+  try {
+    const product = await Product.findOne({ _id: req.params.id });
+    if (!product) {
+      return res.status(400).json({ msg: "No image found" });
+    }
+    res.json({
+      filePath: product.image,
+      fileName: product.imageName,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err);
+  }
+});
+
+// @route   POST api/products/:id/add-image
+// @desc    Add Image
+// @access  Private
+router.post("/:id/add-image", auth, async (req, res) => {
   if (req.files === null) {
     return res.status(400).json({ msg: "No file uploaded" });
   }
   const file = req.files.file;
-  const id = uuid.v4();
+  try {
+    file.mv(`client/public/uploads/${file.name}`);
 
-  file.mv(`../../client/public/uploads/${file.name}`, (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(err);
-    }
+    await Product.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { image: `/uploads/${file.name}`, imageName: file.name } },
+      { new: true }
+    );
     res.json({
       fileName: file.name,
-      filePath: `../../client/public/uploads/${file.name}`,
+      filePath: `/uploads/${file.name}`,
     });
-  });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err);
+  }
 });
 // @route   PUT api/products/:id
 // @desc    Update Product

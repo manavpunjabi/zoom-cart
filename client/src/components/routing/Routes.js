@@ -9,6 +9,7 @@ import AddProduct from "../product/AddProduct";
 import EditProduct from "../product/EditProduct";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import AddImage from "../product/AddImage";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -24,6 +25,11 @@ const Routes = () => {
         <Switch>
           <AdminRoute exact path="/add-product" component={AddProduct} />
           <AdminRoute exact path="/:id/edit" component={EditProduct} />
+          <AdminRoute
+            exact
+            path="/products/:id/add-image"
+            component={AddImage}
+          />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/homepage" component={Homepage} />

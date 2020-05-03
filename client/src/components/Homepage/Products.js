@@ -95,8 +95,8 @@ const Products = ({
                 <div className={classes.heroButtons}>
                   <Grid container spacing={2} justify="center">
                     <Grid item>
-                      <Button variant="contained" color="primary">
-                        Main call to action
+                      <Button href="/cart" variant="contained" color="primary">
+                        Go to cart
                       </Button>
                     </Grid>
                     {admin && (

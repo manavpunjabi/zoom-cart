@@ -4,6 +4,9 @@ import {
   ADD_PRODUCT,
   GET_PRODUCT,
   PRODUCT_DELETED,
+  FILE_SUCCESS,
+  FILE_ERROR,
+  FILE_FOUND,
 } from "./types";
 import axios from "axios";
 import { setAlert } from "./alert";
@@ -101,5 +104,48 @@ export const editProduct = (id, formData, history) => async (dispatch) => {
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
+  }
+};
+
+export const addImage = (id, formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  try {
+    const res = await axios.post(
+      `/api/products/${id}/add-image`,
+      formData,
+      config
+    );
+    dispatch({
+      type: FILE_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(setAlert("File Upload Successful", "success"));
+  } catch (err) {
+    err.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    dispatch({
+      type: FILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const getImage = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/products/${id}/get-image`);
+    dispatch({
+      type: FILE_SUCCESS,
+      payload: res.data,
+    });
+    //dispatch(setAlert("File Upload Successful", "success"));
+  } catch (err) {
+    err.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    dispatch({
+      type: FILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };

@@ -12,3 +12,5 @@ export const GET_PRODUCT = "GET_PRODUCT";
 export const PRODUCT_ERROR = "PRODUCT_ERROR";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const PRODUCT_DELETED = "PRODUCT_DELETED";
+export const FILE_SUCCESS = "FILE_SUCCESS";
+export const FILE_ERROR = "FILE_ERROR";

@@ -5,12 +5,16 @@ import {
   GET_PRODUCT,
   CLEAR_PRODUCT,
   PRODUCT_DELETED,
+  FILE_SUCCESS,
+  FILE_ERROR,
 } from "../actions/types";
 
 const initialState = {
   products: [],
   singleProduct: {},
   loading: true,
+  filePath: "",
+  fileName: "",
 };
 
 export default function (state = initialState, action) {
@@ -45,6 +49,21 @@ export default function (state = initialState, action) {
       return {
         ...state,
         products: state.products.filter((product) => product._id !== payload),
+        loading: false,
+      };
+
+    case FILE_SUCCESS:
+      return {
+        ...state,
+        filePath: payload.filePath,
+        fileName: payload.fileName,
+        loading: false,
+      };
+    case FILE_ERROR:
+      return {
+        ...state,
+        filePath: "",
+        fileName: "",
         loading: false,
       };
     default:
